@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/966c61d686.js" crossorigin="anonymous"></script>
+    <title>Document</title>
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+* {
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif; ;
+}
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: rgb(131,58,180);
+    background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(182,46,117,1) 52%, rgba(252,176,69,1) 100%, rgba(253,29,29,1) 100%);
+}
+.content{
+    /* border:2px solid red; */
+    width: 180px;
+    height: auto;
+    padding:1rem;
+    background: #fff;
+    border-radius: 10px;
+}
+.menu {
+    /* border:2px solid red; */
+    width: 100%;
+
+}
+.menu li{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap:5px;
+    width: 100%;
+    list-style: none;
+    margin-bottom: .5rem;
+    /* border:2px solid red; */
+    padding: 5px;
+    text-transform: capitalize;
+    
+}
+.fa-chevron-right{
+    font-size: 10px;
+}
+</style>
+<body>
+    <div class="wrapper">
+        <div class="content">
+            <ul class="menu">
+                <li class="item">
+                    <i class="fa-regular fa-eye"></i><span>preview</span></li>
+                <li class="item">
+                    <i class="fa-solid fa-share"></i><span>share<i class="fa-solid fa-chevron-right"></i></span></li>
+                    
+
+                <li class="item">
+                    <i class="fa-solid fa-link"></i><span>get link</span></li>
+                <li class="item">
+                    <i class="fa-solid fa-pen-to-square"></i><span>rename</span></li>
+                <li class="item">
+                    <i class="fa-solid fa-trash"></i><span>delete</span></li>
+                <li class="item">
+                    <i class="fa-solid fa-gear"></i><span>setting</span></li>
+            </ul>
+        </div>
+    </div>
+    
+</body>
+</html>
