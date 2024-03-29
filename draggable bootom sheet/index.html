@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>Draggable bottom sheet</title>
+</head>
+
+<body>
+    <button class="show_page">Shaow Bottom Page</button>
+    <div class="bottom_sheet">
+        <div class="sheet_overlay">
+
+        </div>
+        <div class="content">
+            <div class="header">
+                <div class="dragicon"><span></span></div>
+            </div>
+            <div class="body">
+                
+                <h2 class="heading">this is a blog</h2>
+                <p class="para">Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit obcaecati facilis ad quia veritatis, asperiores delectus. Ullam cum nihil voluptates similique ipsum aspernatur ducimus suscipit distinctio, alias eius. Praesentium, ipsa?
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad, excepturi voluptates, ipsum laborum ducimus, rem magni cumque suscipit nisi eaque fuga enim dignissimos iure voluptatum ea? Quaerat ea aspernatur quam.
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Temporibus nihil, exercitationem modi enim distinctio asperiores aspernatur, neque facere eveniet dolores quae omnis ut labore consequuntur aperiam ratione dolore perferendis maiores.
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum iusto pariatur cum vitae dolore consequatur quis aliquam asperiores porro nihil odit laborum amet voluptatem, est ex possimus atque nemo illo
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quae, eligendi maiores alias ab quibusdam nihil harum consectetur deserunt. Non dolore error odio perspiciatis possimus eaque itaque quidem a earum cumque.
+                </p>
+                
+            </div>
+        </div>
+
+    </div>
+    <script>
+        const showBtn=document.querySelector(".show_page");
+        const bottomSheet=document.querySelector(".bottom_sheet")
+        const overlay=bottomSheet.querySelector(".sheet_overlay");
+        const sheetContent=bottomSheet.querySelector(".content");
+        const drag=document.querySelector(".dragicon");
+
+        //global variables for tracking events===
+        let isDragging=false,startY,startHeight;
+
+        const showBottomSheet=()=>{
+            bottomSheet.classList.add("show");
+            //setting default height of shhet
+            updateSheetHeight(50);
+            document.body.style.overflowY="hidden";
+
+        }
+        const removeBottomSheet=()=>{
+            bottomSheet.classList.remove("show");
+            document.body.style.overflowY="auto";
+
+        }
+        overlay.addEventListener("click",removeBottomSheet)
+        showBtn.addEventListener("click",showBottomSheet);
+
+        //updating heiht of the content
+        const updateSheetHeight=(height)=>{
+            sheetContent.style.height=`${height}vh`;
+            bottomSheet.classList.toggle("fullscreen",height===100) 
+        }
+
+        
+
+        //sets isinial dragging positions
+        const dragstart=(e)=>{
+            isDragging=true;
+            startY=e.pageY || e.touches?.[0].pageY;
+            startHeight=parseInt(sheetContent.style.height);
+            bottomSheet.classList.add("dragging");
+
+        }
+        const dragstop=()=>{
+            isDragging=false;
+            bottomSheet.classList.remove("dragging");
+            const sheetHeight=parseInt(sheetContent.style.height);
+            // sheetHeight < 25? : removeBottomSheet():sheetHeight > 75?: updateSheetHeight(100):updateSheetHeight(50);
+            if(sheetHeight<=25){
+                removeBottomSheet();
+            }
+            if(sheetHeight>=75){
+                updateSheetHeight(100);
+            }
+            if(sheetHeight<75 && sheetHeight>25){
+                updateSheetHeight(50);
+            }
+
+        }
+        
+
+        //calculate the new height for the sheet content and csll the update function
+        const dragging=(e)=>{
+            if(!isDragging) return;
+            console.log(e.pageY) //pagey give vertical coordinates
+            const diff=startY-(e.pageY || e.touches?.[0].pageY);
+            const newHeight=startHeight+diff/window.innerHeight*100;
+            // sheetContent.style.height=`${e.pageY}vh`;
+            updateSheetHeight(newHeight);
+        }
+        
+        document.addEventListener("mousedown",dragstart)
+        document.addEventListener("mouseup",dragstop)
+
+        drag.addEventListener("mousemove",dragging)
+
+        document.addEventListener("touchend",dragstart)
+        document.addEventListener("touchstart",dragstop)
+
+        drag.addEventListener("touchmove",dragging)
+    </script>
+</body>
+</html>
