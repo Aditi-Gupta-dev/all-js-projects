@@ -16,41 +16,76 @@
     font-family: "Poppins", sans-serif; ;
 }
 body{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    
     min-height: 100vh;
     background: rgb(131,58,180);
     background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(182,46,117,1) 52%, rgba(252,176,69,1) 100%, rgba(253,29,29,1) 100%);
 }
-.content{
+.wrapper{
     /* border:2px solid red; */
-    width: 180px;
+    visibility:hidden;
+    width: 200px;
     height: auto;
-    padding:1rem;
+    padding:.5rem;
     background: #fff;
     border-radius: 10px;
+    position: absolute;
+
 }
 .menu {
     /* border:2px solid red; */
     width: 100%;
 
 }
-.menu li{
+.content .item:hover{
+    background: #f2f2f2;
+}
+.menu .item{
     display: flex;
     justify-content: start;
     align-items: center;
-    gap:5px;
     width: 100%;
     list-style: none;
     margin-bottom: .5rem;
     /* border:2px solid red; */
     padding: 5px;
     text-transform: capitalize;
+    cursor: pointer;
     
+}
+.menu .item span{
+    margin-left:5px;
+    
+
+}
+.menu .share{
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
+.menu .setting{
+    margin-top: 1rem;
+    border-top:1px solid grey;padding-top:11px
 }
 .fa-chevron-right{
     font-size: 10px;
+}
+.share .share-menu{
+    position:absolute;
+    background:#fff;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    width: 200px;
+    border-radius: 10px;
+    padding: .5rem;
+    right:-200px;
+    top:4px;
+    opacity:0;
+    transition: all 0.3s ease-in-out;
+
+}
+.share:hover .share-menu{
+    opacity:1;
+
 }
 </style>
 <body>
@@ -59,8 +94,20 @@ body{
             <ul class="menu">
                 <li class="item">
                     <i class="fa-regular fa-eye"></i><span>preview</span></li>
-                <li class="item">
-                    <i class="fa-solid fa-share"></i><span>share<i class="fa-solid fa-chevron-right"></i></span></li>
+                <li class="item share">
+                    <div><i class="fa-solid fa-share"></i><span>share</span></div>
+                    <i class="fa-solid fa-chevron-right"></i>
+                    <ul class="share-menu">
+                        <li class="item">
+                            <i class="fa-brands fa-instagram"></i><span>instagram</span></li>
+                        <li class="item">
+                            <i class="fa-brands fa-facebook"></i><span>facebook</span></li>
+                        <li class="item">
+                            <i class="fa-brands fa-linkedin"></i><span>linkedin</span></li>
+                        <li class="item">
+                            <i class="fa-brands fa-telegram"></i><span>telegram</span></li>
+                    </ul>
+                    </li>
                     
 
                 <li class="item">
@@ -69,11 +116,47 @@ body{
                     <i class="fa-solid fa-pen-to-square"></i><span>rename</span></li>
                 <li class="item">
                     <i class="fa-solid fa-trash"></i><span>delete</span></li>
-                <li class="item">
+                <li class="item setting">
                     <i class="fa-solid fa-gear"></i><span>setting</span></li>
             </ul>
         </div>
     </div>
     
+    <script>
+        const contextMenu=document.querySelector(".wrapper");
+        const shareMenu=contextMenu.querySelector(".share-menu");
+
+        document.addEventListener("contextmenu",(e)=>{
+            e.preventDefault();
+
+            let x=e.offsetX,y=e.offsetY;
+            winWidth=window.innerWidth;
+            winHeight=window.innerHeight;
+            cmWidth=contextMenu.offsetWidth;
+            cmHeight=contextMenu.offsetHeight;
+
+            //positioning the side menu ac to screen space
+            if(x>(winHeight-cmWidth-shareMenu.offsetWidth)){
+                shareMenu.style.left="-200px";
+            }else{
+                shareMenu.style.right="-200px";
+            }
+
+            //if x >window width -contextmenu width then set x value same goes for y
+            x=x>winWidth-cmWidth? winWidth-cmWidth : x;
+            y=y>winHeight-cmHeight? winHeight-cmHeight : y;
+
+            //offset give coordinates
+           
+            contextMenu.style.left=`${x}px`;
+            contextMenu.style.top=`${y}px`;
+            contextMenu.style.visibility="visible";
+        });
+
+
+        //hiding the menu on left click
+        document.addEventListener("click",()=>contextMenu.style.visibility="hidden");
+
+    </script>
 </body>
 </html>
